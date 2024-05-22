@@ -47,6 +47,7 @@ const pizzaData = [
   },
 ];
 
+//Main App
 function App() {
   return (
     <div className="container">
@@ -71,19 +72,11 @@ function Menu() {
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <Pizza
-        name="Pizza Spinaci"
-        ingredients="Tomato, mozarella, spinach, and ricotta cheese."
-        photoName="pizzas/spinaci.jpg"
-        price={14}
-      />
-
-      <Pizza
-        name="Pizza Fungi"
-        ingredients="Tomato, Mushrooms, spinach, and ricotta cheese."
-        photoName="pizzas/funghi.jpg"
-        price={16}
-      />
+      <ul className="pizzas">
+        {pizzaData.map((item) => {
+          return <Pizza details={item} key={item.name} />;
+        })}
+      </ul>
     </main>
   );
 }
@@ -91,15 +84,18 @@ function Menu() {
 //Pizza components
 function Pizza(props) {
   return (
-    <div className="pizza">
-      <h3>{props.name}</h3>
-      <img src={props.photoName} alt={props.name}></img>
-      <p>{props.ingredients}</p>
-      <span>{props.price * 1.18}</span>
-    </div>
+    <li className="pizza">
+      <img src={props.details.photoName} alt={props.details.name}></img>
+      <div>
+        <h3>{props.details.name}</h3>
+        <p>{props.details.ingredients}</p>
+        <span>{props.details.price}</span>
+      </div>
+    </li>
   );
 }
 
+//footer component
 function Footer() {
   const hour = new Date().getHours();
   const openHour = 12;
