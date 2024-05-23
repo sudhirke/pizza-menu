@@ -69,20 +69,25 @@ function Header() {
 
 //Menu component
 function Menu() {
+  const pizzas = pizzaData;
+
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <ul className="pizzas">
-        {pizzaData.map((item) => {
-          return <Pizza details={item} key={item.name} />;
-        })}
-      </ul>
+      {pizzas.length > 0 && (
+        <ul className="pizzas">
+          {pizzaData.map((item) => {
+            return <Pizza details={item} key={item.name} />;
+          })}
+        </ul>
+      )}
     </main>
   );
 }
 
 //Pizza components
 function Pizza(props) {
+  if (props.details.soldOut) return null;
   return (
     <li className="pizza">
       <img src={props.details.photoName} alt={props.details.name}></img>
@@ -105,8 +110,26 @@ function Footer() {
 
   return (
     <footer className="footer">
-      At {new Date().toLocaleTimeString()} We are currently open and serving.
+      {isOpen ? (
+        <OpenHours openHour={openHour} closeHour={closeHour} />
+      ) : (
+        <p>
+          We're happy to welcome you between {openHour}:00pm and {closeHour}
+          :00pm.
+        </p>
+      )}
     </footer>
+  );
+}
+
+function OpenHours({ openHour, closeHour }) {
+  return (
+    <div className="order">
+      <p>
+        We are open and serving from {openHour}:00 till {closeHour}:00
+      </p>
+      <button className="btn">Order Now</button>
+    </div>
   );
 }
 
